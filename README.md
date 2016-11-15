@@ -40,12 +40,12 @@ nginx とかのログ出力先をホスト側ディレクトリにしておく�
 
 * nginx/conf.d/site.conf を別名でコピーして、さっきの要領で your_host_fqdn、your_host_fqdn_access.log、your_project_local_path を書き換える
 * 同じように、「root」の /var/www/webroot も適当に変更する
-* docker-compose.yml の「php」および「nginx」の「volumes」の webroot も上にあわせて追記する
+* docker-compose.yml の「php」および「nginx」の「volumes」の webroot も上の変更にあわせて追記する
 
 ### SSL/TLS サイトにする場合
 
 * nginx/conf.d/site.conf の下の方でコメントアウトされている箇所を参考に。例として Let's Encrypt を使う想定になってる
-* docker-compose.yml の nginx の ports でコメントアウトされてる 443 ポートを有効にする
+* docker-compose.yml の「nginx」の「ports」でコメントアウトされてる 443 ポートを有効にする
 * HSTS を有効にしたい場合は nginx/conf.d/000security.conf 下の方でコメントアウトされている箇所を参考に
 
 ### MySQL の root パスワード
