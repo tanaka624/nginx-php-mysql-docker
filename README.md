@@ -36,7 +36,7 @@ nginx のログ出力先をローカルディレクトリにしておく。エ�
   * 「nginx」の「volumes」の your_log_local_path のところ
 
 
-### マルチドメイン にする場合
+### ヴァーチャルホストにする場合
 
 * nginx/conf.d/site.conf を別名でコピーして、さっきの要領で your_host_fqdn、your_host_fqdn_access.log、your_project_local_path を書き換える
 * 同じように、「/var/www/webroot」も適当に変更する
