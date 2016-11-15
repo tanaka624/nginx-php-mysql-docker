@@ -48,10 +48,23 @@ docker-compose.yml で MYSQL_ROOT_PASSWORD として定義している。変更�
 
 ## 実行方法
 
+### 初回起動
+
 ````
 $ docker-compose up -d
 ````
 
+### 終了
+
+````
+$ docker-compose stop
+````
+
+### 2回目以降
+
+````
+$ docker-compose start
+````
 
 ## その他
 
