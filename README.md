@@ -49,7 +49,7 @@ docker-compose.yml で MYSQL_ROOT_PASSWORD として定義している。変更�
 ### 初回起動
 
 ````
-$ docker-compose up -d
+$ docker-compose -p YOUR_PROJECT_NAME up -d
 ````
 
 ### 終了
