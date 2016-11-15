@@ -2,7 +2,7 @@
 
 ## コレは何？
 
-docker-compose すれば LAMP 環境が作れる的なヤツ
+docker-compose すれば LAMP 環境が作れる的なヤツ。開発環境を想定してコンテンツやPHPスクリプトはホスト側におく想定。本番環境として使ってもない問題程度にセキュアな設定になっているつもり
 
 ## 使う前に
 
@@ -73,4 +73,4 @@ $ docker-compose -p YOUR_PROJECT_NAME start
 
 ## その他
 
-ホスト環境は Ubuntu または Debian であることを想定しているけど、変に uid とかチェックしていなければ他の環境でも動くとは思う
+ホスト環境は Debian または Ubuntu であることを想定して、PHP コンテナ (Alpine) の www-data を Debian/Ubuntu とに同じになるように変更している。変に uid とかチェックしていなければ他の環境でも動くとは思う
