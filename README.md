@@ -24,9 +24,6 @@ docker-compose すれば LAMP 環境が作れる的なヤツ
   * 「php」の「volumes」の your_project_local_path のところ
   * 「nginx」の「volumes」の your_project_local_path のところ
 
-* nginx/conf.d/site.conf
-  * 「location /」の「root」の your_project_local_path のところ
-
 ### メール送信サーバー
 * php/conf.d/000sendmail.ini の YOUR_SMTP_HOSTNAME に送信可能な SMTP サーバーを指定する
 * Gmail とかの認証が必要なメールサーバーの場合は、その下のコメントアウトしてるやつでいけるかも。試してないけど
