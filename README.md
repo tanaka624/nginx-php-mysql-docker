@@ -54,6 +54,8 @@ docker-compose.yml で MYSQL_ROOT_PASSWORD として定義している。変更�
 
 ## 実行方法
 
+「YOUR_PROJECT_NAME」は適当に名前をつけて読み替えること
+
 ### 初回起動
 
 ````
@@ -66,10 +68,17 @@ $ docker-compose -p YOUR_PROJECT_NAME up -d
 $ docker-compose -p YOUR_PROJECT_NAME stop
 ````
 
-### 2回目以降
+
+### 2回目以降の起動
 
 ````
 $ docker-compose -p YOUR_PROJECT_NAME start
+````
+
+### MySQL への CLI アクセス
+
+````
+$ docker exec -it YOUR_PROJECT_NAME_mysql_1 mysql -uroot -psecret mysql
 ````
 
 ## その他
