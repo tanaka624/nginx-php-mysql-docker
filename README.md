@@ -1,4 +1,4 @@
- docker-compose を使った LAMP 環境のひな形
+# docker-compose を使った LAMP 環境のひな形
 
 ## コレは何？
 
