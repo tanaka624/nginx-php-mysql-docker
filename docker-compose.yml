@@ -1,0 +1,32 @@
+mysql-data:
+  image: alpine
+  command: echo "done."
+  volumes:
+    - /var/lib/mysql
+
+mysql:
+  build: ./mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: secret
+  volumes_from:
+    - mysql-data
+  expose:
+    - "3306"
+
+php:
+  build: ./php
+  links:
+    - mysql:mysql
+  expose:
+    - "9000"
+  volumes:
+    - /your_project_local_path
+
+nginx:
+  build: ./nginx
+  links:
+    - php:php
+  volumes:
+    - /your_project_local_path
+  ports:
+    - "80:80"
