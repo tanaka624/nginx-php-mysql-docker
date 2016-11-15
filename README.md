@@ -42,10 +42,11 @@ nginx のログ出力先をローカルディレクトリにしておく。エ�
 * 同じように、「root」の /var/www/webroot も適当に変更する
 * docker-compose.yml の「php」および「nginx」の「volumes」の webroot も上にあわせて追記する
 
-### SSL サイトにする場合
+### SSL/TLS サイトにする場合
 
 * nginx/conf.d/site.conf の下の方でコメントアウトされている箇所を参考に。例として Let's Encrypt を使う想定になってる
-* HSTS を有効にしたい場合は nginx/conf.d/000security.conf 下の方でコメントアウトされている箇所を参考に。
+* docker-compose.yml の nginx の ports でコメントアウトされてる 443 ポートを有効にする
+* HSTS を有効にしたい場合は nginx/conf.d/000security.conf 下の方でコメントアウトされている箇所を参考に
 
 ### MySQL の root パスワード
 
