@@ -30,7 +30,7 @@ docker-compose すれば LAMP 環境が作れる的なヤツ
 
 ### ログ出力先
 
-nginx のログ出力先をローカルディレクトリにしておく。エラーがおきてもわからないので。指定した先に nginx というサブディレクトリを事前に掘っておくこと
+nginx のログ出力先をローカルディレクトリにしておく。エラーがおきてもわからないので。指定した先に nginx というサブディレクトリを事前に掘っておくこと。/var/log とか、開発環境なら /home/user/なんちゃらとか
 
 * docker-compose.yml
   * 「nginx」の「volumes」の your_log_local_path のところ
