@@ -35,7 +35,8 @@ docker-compose すれば LAMP 環境が作れる的なヤツ
 ### マルチドメイン にする場合
 
 * nginx/conf.d/site.conf を別名でコピーして、さっきの要領で your_host_fqdn、your_host_fqdn_access.log、your_project_local_path を書き換える
-* docker-compose.yml の「php」および「nginx」の「volumes」を書き加える
+* 同じように、「/var/www/webroot」も適当に変更する
+* docker-compose.yml の「php」および「nginx」の「volumes」を上にあわせて追記する
 
 ### SSL サイトにする場合
 

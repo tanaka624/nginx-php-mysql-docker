@@ -20,13 +20,13 @@ php:
   expose:
     - "9000"
   volumes:
-    - /your_project_local_path
+    - /var/www/webroot:/your_project_local_path
 
 nginx:
   build: ./nginx
   links:
     - php:php
   volumes:
-    - /your_project_local_path
+    - /var/www/webroot:/your_project_local_path
   ports:
     - "80:80"
