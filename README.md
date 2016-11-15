@@ -28,6 +28,13 @@ docker-compose すれば LAMP 環境が作れる的なヤツ
 * php/conf.d/000sendmail.ini の YOUR_SMTP_HOSTNAME に送信可能な SMTP サーバーを指定する
 * Gmail とかの認証が必要なメールサーバーの場合は、その下のコメントアウトしてるやつでいけるかも。試してないけど
 
+### ログ出力先
+
+nginx のログ出力先をローカルディレクトリにしておく。エラーがおきてもわからないので。指定した先に nginx というサブディレクトリを事前に掘っておくこと
+
+* docker-compose.yml
+  * 「nginx」の「volumes」の your_log_local_path のところ
+
 
 ### マルチドメイン にする場合
 

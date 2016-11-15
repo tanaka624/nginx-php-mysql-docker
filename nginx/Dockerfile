@@ -1,5 +1,6 @@
 FROM nginx:stable-alpine
 COPY conf.d/*.conf /etc/nginx/conf.d/
+RUN rm -f /etc/nginx/conf.d/default.conf
 
 RUN apk upgrade -U -a
 RUN apk add --update curl ca-certificates
