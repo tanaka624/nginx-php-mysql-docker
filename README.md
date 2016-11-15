@@ -55,13 +55,13 @@ $ docker-compose -p YOUR_PROJECT_NAME up -d
 ### 終了
 
 ````
-$ docker-compose stop
+$ docker-compose -p YOUR_PROJECT_NAME stop
 ````
 
 ### 2回目以降
 
 ````
-$ docker-compose start
+$ docker-compose -p YOUR_PROJECT_NAME start
 ````
 
 ## その他
