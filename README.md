@@ -74,4 +74,4 @@ $ docker-compose -p YOUR_PROJECT_NAME start
 
 ## その他
 
-ホスト環境は Debian または Ubuntu であることを想定して、PHP コンテナ (Alpine) の www-data を Debian/Ubuntu とに同じになるように変更している。変に uid とかチェックしていなければ他の環境でも動くとは思う
+ホスト環境は Debian または Ubuntu であることを想定して、PHP コンテナ (Alpine) の www-data を Debian/Ubuntu と同じ uid/gid になるように変更している。変に uid とかをチェックしていなければ他の環境でも問題ないと思うけど
