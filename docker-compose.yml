@@ -29,5 +29,6 @@ nginx:
   volumes:
     - /your_project_local_path:/var/www/webroot
     - /your_log_local_path:/var/log
+#    - /etc/letsencrypt:/etc/letsencrypt
   ports:
     - "80:80"
