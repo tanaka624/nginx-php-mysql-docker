@@ -5,6 +5,7 @@ RUN apk add --update freetype libjpeg-turbo libpng
 RUN apk add --update libmcrypt
 RUN apk add --update libbz2
 RUN apk add --update minizip
+RUN apk add --update mysql-client
 
 RUN apk add --virtual=build-dep alpine-sdk autoconf \
   freetype-dev libjpeg-turbo-dev libpng-dev \
