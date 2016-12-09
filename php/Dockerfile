@@ -8,7 +8,7 @@ RUN apk add --update minizip
 
 RUN apk add --virtual=build-dep alpine-sdk autoconf \
   freetype-dev libjpeg-turbo-dev libpng-dev \
-  libmcrypt-dev bzip2-dev minizip-dev
+  libmcrypt-dev bzip2-dev minizip-dev openssl-dev
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include
 RUN docker-php-ext-install \
@@ -24,8 +24,9 @@ RUN docker-php-ext-install \
       pcntl
 
 RUN pecl install apcu && \
-  chmod 755 /usr/local/lib/php/extensions/no-debug-non-zts-20151012/apcu.so && \
-  echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20151012/apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
+  apcpath=`ls /usr/local/lib/php/extensions/no-debug-non-zts-*/apcu.so` &&  \
+  chmod 755 $apcpath && \
+  echo "extension=$apcpath" > /usr/local/etc/php/conf.d/apcu.ini
 
 
 # Ubuntuホストとwww-dataのuid/gidをあわせる
