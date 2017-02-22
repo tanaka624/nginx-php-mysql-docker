@@ -25,8 +25,8 @@ docker-compose すれば PHP Web アプリの環境が作れる的なヤツ。�
   * 「nginx」の「volumes」の your_project_local_path のところ
 
 ### メール送信サーバー
-* php/conf.d/000sendmail.ini の YOUR_SMTP_HOSTNAME に送信可能な SMTP サーバーを指定する
-* Gmail とかの認証が必要なメールサーバーの場合は、その下のコメントアウトしてるやつでいけるかも。試してないけど
+* php/otherconf/esmtprc を編集する。Gmail 用になっているので、username と password に自分のものを設定する
+* いちばん単純には、hostname に認証の必要ない MUA を設定して、他は全部コメントアウトすれば良いかもしんない
 
 ### ログ出力先
 
@@ -58,29 +58,30 @@ docker-compose.yml で MYSQL_ROOT_PASSWORD として定義している。変更�
 
 ### 初回起動
 
-````
+```
 $ docker-compose -p YOUR_PROJECT_NAME up -d
-````
+```
 
 ### 終了
 
-````
+```
 $ docker-compose -p YOUR_PROJECT_NAME stop
-````
+```
 
 
 ### 2回目以降の起動
 
-````
+```
 $ docker-compose -p YOUR_PROJECT_NAME start
-````
+```
 
 ### MySQL への CLI アクセス
 
-````
-$ docker exec -it YOUR_PROJECT_NAME_mysql_1 mysql -uroot -psecret mysql
-````
+```
+$ docker exec -it YOUR_PROJECT_NAME_php_1 mysql -uroot -psecret -hmysql mysql
+```
+mysql コンテナで mysql コマンドを使うと、はなぜだか日本語が通らない
 
 ## その他
 
-ホスト環境は Debian または Ubuntu であることを想定して、PHP コンテナ (Alpine) の www-data を Debian/Ubuntu と同じ uid/gid になるように変更している。変に uid とかをチェックしていなければ他の環境でも問題ないと思うけど
+ホスト環境は Debian または Ubuntu であることを想定している。変に uid とかをチェックしていなければ他の環境でも問題ないと思うけど、世の中にはそうい PHP アプリもあるので注意
