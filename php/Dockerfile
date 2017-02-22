@@ -1,15 +1,17 @@
-FROM php:7-fpm-alpine
+FROM php:7-fpm
 
-RUN apk upgrade -U -a
-RUN apk add --update freetype libjpeg-turbo libpng
-RUN apk add --update libmcrypt
-RUN apk add --update libbz2
-RUN apk add --update minizip
-RUN apk add --update mysql-client
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y libfreetype6 libjpeg62-turbo libpng12-0
+RUN apt-get install -y libmcrypt4
+RUN apt-get install -y bzip2
+RUN apt-get install -y libzip2
+RUN apt-get install -y libssl1.0.0
+RUN apt-get install -y esmtp
+RUN apt-get install -y mysql-client
 
-RUN apk add --virtual=build-dep alpine-sdk autoconf \
-  freetype-dev libjpeg-turbo-dev libpng-dev \
-  libmcrypt-dev bzip2-dev minizip-dev openssl-dev
+RUN apt-get install -y autoconf \
+  libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
+  libmcrypt-dev libbz2-dev libzip-dev libssl-dev
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include
 RUN docker-php-ext-install \
@@ -25,18 +27,17 @@ RUN docker-php-ext-install \
       pcntl
 
 RUN pecl install apcu && \
-  apcpath=`ls /usr/local/lib/php/extensions/no-debug-non-zts-*/apcu.so` &&  \
+  apcpath=`ls /usr/local/lib/php/extensions/no-debug-non-zts-*/apcu.so` && \
   chmod 755 $apcpath && \
   echo "extension=$apcpath" > /usr/local/etc/php/conf.d/apcu.ini
 
-
-# Ubuntuホストとwww-dataのuid/gidをあわせる
-RUN deluser www-data && \
-  deluser xfs && \
-  addgroup -g 33 -S www-data && \
-  adduser -u 33 -D -S -G www-data www-data
-
-RUN apk del --purge build-dep
-RUN rm -rf /var/cache/apk/*
+RUN apt-get install -y tzdata
+RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN apt-get remove -y autoconf \
+  libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
+  libmcrypt-dev libbz2-dev libzip-dev libssl-dev
+RUN apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 COPY conf.d/*.ini /usr/local/etc/php/conf.d/
+COPY otherconf/inputrc /root/.inputrc
+COPY otherconf/esmtprc /etc/
