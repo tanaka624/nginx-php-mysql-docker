@@ -77,10 +77,11 @@ $ docker-compose -p YOUR_PROJECT_NAME start
 
 ### MySQL への CLI アクセス
 
+mysql コンテナで mysql コマンドを使うとなぜだか日本語が通らないので、php コンテナから使う例
+
 ```
 $ docker exec -it YOUR_PROJECT_NAME_php_1 mysql -uroot -psecret -hmysql mysql
 ```
-mysql コンテナで mysql コマンドを使うとなぜだか日本語が通らない
 
 ## その他
 
