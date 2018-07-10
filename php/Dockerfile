@@ -1,17 +1,14 @@
 FROM php:7-fpm
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y libfreetype6 libjpeg62-turbo libpng12-0
-RUN apt-get install -y libmcrypt4
+RUN apt-get install -y libfreetype6 libjpeg62-turbo
 RUN apt-get install -y bzip2
-RUN apt-get install -y libzip2
-RUN apt-get install -y libssl1.0.0
 RUN apt-get install -y esmtp
 RUN apt-get install -y mysql-client
 
 RUN apt-get install -y autoconf \
-  libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
-  libmcrypt-dev libbz2-dev libzip-dev libssl-dev
+  libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+  libbz2-dev libzip-dev libssl-dev
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include
 RUN docker-php-ext-install \
@@ -20,7 +17,6 @@ RUN docker-php-ext-install \
       pdo_mysql \
       opcache \
       gd \
-      mcrypt \
       zip \
       bz2 \
       ftp \
