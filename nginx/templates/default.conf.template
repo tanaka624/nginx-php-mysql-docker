@@ -1,7 +1,7 @@
 server {
-  server_name localhost;
-  access_log /var/log/nginx/localhost_access.log combined;
-  root /var/www/webroot;
+  server_name ${NGINX_HOST};
+  access_log /var/log/nginx/${ACCESS_LOG} combined;
+  root /var/www/${WEB_ROOT};
 
   location / {
     index index.php index.html index.htm;

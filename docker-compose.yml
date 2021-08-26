@@ -1,34 +1,36 @@
-mysql-data:
-  image: alpine
-  command: echo "done."
-  volumes:
-    - /var/lib/mysql
+version: "3"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - 80:80
+      # - 443:443
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ${LOG_DIR}:/var/log
+      - ${PROJECT_DIR}:/var/www/${WEB_ROOT}
+      # - /etc/letsencrypt:/etc/letsencrypt
+    environment:
+      NGINX_HOST: ${NGINX_HOST}
+      ACCESS_LOG: ${ACCESS_LOG}
+      WEB_ROOT: ${WEB_ROOT}
+      TZ: ${TZ}
 
-mysql:
-  build: ./mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: secret
-  volumes_from:
-    - mysql-data
-  expose:
-    - "3306"
+  php:
+    build: ./php
+    volumes:
+      - ${PROJECT_DIR}:/var/www/${WEB_ROOT}
+    environment:
+      TZ: ${TZ}
 
-php:
-  build: ./php
-  links:
-    - mysql:mysql
-  expose:
-    - "9000"
-  volumes:
-    - /your_project_local_path:/var/www/webroot
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/initdb:/docker-entrypoint.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: ${TZ}
 
-nginx:
-  build: ./nginx
-  links:
-    - php:php
-  volumes:
-    - /your_project_local_path:/var/www/webroot
-    - /your_log_local_path:/var/log
-#    - /etc/letsencrypt:/etc/letsencrypt
-  ports:
-    - "80:80"
+volumes:
+  mysql-data: {}
