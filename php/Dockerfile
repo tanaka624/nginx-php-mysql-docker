@@ -1,39 +1,73 @@
-FROM php:7-fpm
+# FROM php:7.4-fpm
+FROM php:8.0-fpm
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y libfreetype6 libjpeg62-turbo
-RUN apt-get install -y bzip2
-RUN apt-get install -y esmtp
-RUN apt-get install -y mysql-client
+# Install packages
+RUN apt-get update && apt-get install -y \
+  bzip2 \
+  default-mysql-client \
+  esmtp \
+  libfreetype6 \
+  libjpeg62-turbo \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y autoconf \
-  libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-  libbz2-dev libzip-dev libssl-dev
+# Remove after Install php extention
+RUN apt-get update && apt-get install -y \
+  autoconf \
+  libbz2-dev \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libonig-dev \
+  libpng-dev \
+  libssl-dev \
+  libzip-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include
-RUN docker-php-ext-install \
-      mbstring \
-      mysqli \
-      pdo_mysql \
-      opcache \
-      gd \
-      zip \
-      bz2 \
-      ftp \
-      pcntl
+# Install php extentions
+RUN docker-php-ext-configure gd --with-freetype=/usr/include --with-jpeg=/usr/include \
+  && docker-php-ext-install -j$(nproc) \
+  bz2 \
+  ftp \
+  gd \
+  mbstring \
+  mysqli \
+  opcache \
+  pcntl \
+  pdo_mysql \
+  zip
 
-RUN pecl install apcu && \
-  apcpath=`ls /usr/local/lib/php/extensions/no-debug-non-zts-*/apcu.so` && \
-  chmod 755 $apcpath && \
-  echo "extension=$apcpath" > /usr/local/etc/php/conf.d/apcu.ini
+# Install php extention apcu
+RUN pecl install apcu \
+  && apcpath=`ls /usr/local/lib/php/extensions/no-debug-non-zts-*/apcu.so` \
+  && chmod 755 $apcpath \
+  && echo "extension=$apcpath" > /usr/local/etc/php/conf.d/apcu.ini
 
-RUN apt-get install -y tzdata
-RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-RUN apt-get remove -y autoconf \
-  libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
-  libmcrypt-dev libbz2-dev libzip-dev libssl-dev
-RUN apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+# Set localtime
+RUN apt-get update && apt-get install -y tzdata \
+  && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-COPY conf.d/*.ini /usr/local/etc/php/conf.d/
-COPY otherconf/inputrc /root/.inputrc
-COPY otherconf/esmtprc /etc/
+# Set locale
+RUN apt-get update && apt-get install -y \
+  locales \
+  && rm -rf /var/lib/apt/lists/*
+RUN sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen \
+  && locale-gen
+ENV LANG ja_JP.UTF-8
+
+# Remove packages
+RUN apt-get remove -y \
+  autoconf \
+  libbz2-dev \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libonig-dev \
+  libpng-dev \
+  libssl-dev \
+  libzip-dev
+
+RUN apt-get clean \
+  && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+
+# Copy config files
+COPY ./conf.d/*.ini /usr/local/etc/php/conf.d
+COPY ./otherconf/inputrc /root/.inputrc
+COPY ./otherconf/esmtprc /etc/
