@@ -2,11 +2,11 @@
 
 ## コレは何？
 
-docker-compose すれば PHP Web アプリの環境が作れます。開発環境を想定してコンテンツや PHP スクリプトはホスト側に置く設定としています。本番環境として使っても問題ない程度にセキュアな設定にしています。
+docker-compose すれば PHP Web アプリの環境を作ることができます。開発環境を想定してコンテンツや PHP スクリプトはホスト側に置く設定としています。本番環境として使っても問題ない程度にセキュアな設定にしています。
 
 ## 使う前に
 
-以下の点を変更すること
+以下の点を変更してください。
 
 ### FQDN
 
@@ -18,14 +18,14 @@ docker-compose すれば PHP Web アプリの環境が作れます。開発環�
 
 #### プロジェクトのパス
 
-コンテンツや PHP スクリプトを置く場所。/var/www/example、開発環境なら /home/user/example。
+コンテンツや PHP スクリプトを置くホスト側の場所です。本番環境なら /var/www/example、開発環境なら /home/user/example のようになります。
 
 * .env ファイル
   * 「PROJECT_DIR」の ./htdocs のところ
 
 ### メール送信サーバー
 
-* php/otherconf/esmtprc を編集する。Gmail 用になっているので、username と password に自分のものを設定します
+* php/otherconf/esmtprc を編集します。Gmail 用になっていますので、username と password に自分のものを設定します
 * 簡単にする場合、hostname に認証の必要ない MUA を設定して、他は全部コメントアウトするのがいいかもしれません
 
 ### ログ出力先
@@ -42,27 +42,27 @@ nginx とかのログ出力先をホスト側ディレクトリに変更しま�
 
 ### SSL/TLS サイトにする場合
 
-* nginx/templates/default.conf.template の下の方でコメントアウトされている箇所を参考に。例として Let's Encrypt を使う想定になってる
-* docker-compose.yml の「nginx」の「ports」でコメントアウトされてる 443 ポートを有効にする
-* HSTS を有効にしたい場合は nginx/templates/000security.conf.template 下の方でコメントアウトされている箇所を参考に
+* nginx/templates/default.conf.template の下の方でコメントアウトされている箇所を参考にしてください。例として Let's Encrypt を使う想定になっています
+* docker-compose.yml の「nginx」の「ports」でコメントアウトされている 443 ポートを有効にします
+* HSTS を有効にしたい場合は nginx/templates/000security.conf.template 下の方でコメントアウトされている箇所を参考にしてください
 
 ### Nginx の設定ファイルを追加したい場合
 
 nginx/templates に *.conf.template ファイルを置くと envsubst で変数を置換されて　/etc/nginx/conf.d に *.conf ファイルが作成されるようになっています。
 
-* nginx/templates に *.conf ファイルを *.conf.template にリネームして保存する
+* nginx/templates に *.conf ファイルを *.conf.template にリネームして保存します
 
 ### MySQL の root パスワード
 
-.env で MYSQL_ROOT_PASSWORD として定義している。変更したければ「secret」を書き換える
+.env で MYSQL_ROOT_PASSWORD として定義しています。変更する場合「secret」を書き換えます。
 
 ### MySQL の初期化
 
-MySQLのコンテナを作成するときに読み込ませたいダンプファイルやシェルスクリプトがあれば mysql/initdb にファイルを保存する。
+MySQLのコンテナを作成するときに読み込ませたいダンプファイルやシェルスクリプトがあれば mysql/initdb にファイルを保存します。
 
 ## 実行方法
 
-「YOUR_PROJECT_NAME」は適当に名前をつけて読み替えること
+「YOUR_PROJECT_NAME」は適当に名前をつけて読み替えてください。
 
 ### 初回起動
 
@@ -93,4 +93,4 @@ $ docker exec -it YOUR_PROJECT_NAME_php_1 mysql -uroot -psecret -hmysql mysql
 
 ## その他
 
-ホスト環境は Debian または Ubuntu であることを想定している。変に uid などをチェックしていなければ他の環境でも問題ないと思いますが、世の中にはそういう PHP アプリもあるので注意してください。
+ホスト環境は Debian または Ubuntu であることを想定しています。変に uid などをチェックしていなければ他の環境でも問題ないと思いますが、世の中にはそういう PHP アプリもあるので注意してください。
