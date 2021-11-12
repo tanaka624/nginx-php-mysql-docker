@@ -41,6 +41,10 @@ RUN pecl install apcu \
   && chmod 755 $apcpath \
   && echo "extension=$apcpath" > /usr/local/etc/php/conf.d/apcu.ini
 
+# Install php extention xdebug
+RUN pecl install xdebug \
+  && docker-php-ext-enable xdebug
+
 # Set localtime
 RUN apt-get update && apt-get install -y tzdata \
   && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
