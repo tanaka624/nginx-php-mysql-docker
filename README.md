@@ -93,6 +93,26 @@ php コンテナの mysql クライアントで日本語入力が使えるよう
 $ docker exec -it YOUR_PROJECT_NAME_php_1 mysql -uroot -psecret -hmysql mysql
 ```
 
+### VSCodeでXdebugを使用する
+
+VSCodeとウェブブラウザに拡張機能をインストールすることでXdebugのステップデバッグを利用できます。
+
+.env に `XDEBUG_MODE=debug` を追記してから、`docker-compose up -d` をターミナルで実行してコンテナを起動します。
+
+VSCodeにはPHP Debug（felixfbecker.php-debug）をインストールします。.vscodeにあるlaunch.jsonは構成に合わせて変更してください。
+
+https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug
+
+デバッグに使うウェブブラウザにはXdebugヘルパーをインストールしてください。Firefox用、Chrome用、Safari用があります。
+
+https://xdebug.org/docs/step_debug#web-application
+
+ステップデバッグを開始するには、VSCodeでデバッグの開始とブレークポイントの設置を行います。また、ウェブブラウザでXdebugヘルパーをクリックしてデバッグを有効にします。リロードやボタンのクリックをしてPHPのコードを実行するとブレークポイントを設置した箇所で一時停止します。
+
+設定したブレークポイントが未確認のブレークポイントになる場合、pathMappingの設定が間違っている場合があります。
+
+WSL2バックエンドを利用している場合、WSLの再起動でhost.docker.internalが解決されるようになり、正常に動く場合があります。
+
 ## その他
 
 ホスト環境は Debian または Ubuntu であることを想定しています。変に uid などをチェックしていなければ他の環境でも問題ないと思いますが、世の中にはそういう PHP アプリもあるので注意してください。
